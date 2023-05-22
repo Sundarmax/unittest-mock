@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch,MagicMock
-
+import  responses
 import source
 from source import *
 
@@ -18,3 +18,13 @@ class TestUser(unittest.TestCase):
         mock_request.get.return_value = mock_response
 
         self.assertEqual(get_user(), [1,2])
+
+    @responses.activate
+    def test_get_return_a_user(self):
+        responses.add(
+            method=responses.GET,
+            url = 'https://reqres.in/api/users?page=2',
+            status=200,
+            json= {'data': [1,2,3]}
+        )
+        self.assertEqual(get_user(), [1,2,3])
