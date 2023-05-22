@@ -28,3 +28,14 @@ class TestUser(unittest.TestCase):
             json= {'data': [1,2,3]}
         )
         self.assertEqual(get_user(), [1,2,3])
+
+    @responses.activate
+    def test_get_user_exception(self):
+        responses.add(
+            method=responses.GET,
+            url = 'https://reqres.in/api/users?page=2',
+            status=500,
+            json = {}
+        )
+        res = "Connection error was raised"
+        self.assertEqual(get_user(), res)
