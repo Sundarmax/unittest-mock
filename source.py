@@ -6,6 +6,10 @@ def len_user():
     return len(joke)
 
 
+def convert_integer(n):
+    return int(n)
+
+
 def get_user():
     url = 'https://reqres.in/api/users?page=2'
     response = requests.get(url)
